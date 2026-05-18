@@ -1,6 +1,6 @@
 {
     "type": "Serial",
-    "name": "ModbusRTU",
+    "name": "Modbus RTU",
     "path": "ToCenTek",
     "version": "1.0.0",
     "description": "Modbus RTU Serial Master",
@@ -376,7 +376,7 @@
                 },
                 "QuantityLow": {
                     "type": "Integer",
-                    "default": 1,
+                    "default": 8,
                     "min": 1,
                     "max": 255,
                     "description": "数量低字节\nQuantity Low Byte\n"
