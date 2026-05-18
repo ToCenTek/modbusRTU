@@ -1,0 +1,413 @@
+{
+    "type": "Serial",
+    "name": "ModbusRTU",
+    "path": "ToCenTek",
+    "version": "1.0.0",
+    "description": "Modbus RTU Serial Master",
+    "hasInput": true,
+    "hasOutput": true,
+    "hideDefaultCommands": true,
+    "defaults": {
+        "Protocol": "Raw",
+        "BaudRate": 9600,
+        "DataBits": 8,
+        "StopBits": 1,
+        "Parity": "None"
+    },
+    "scripts": ["modbusRTU.js"],
+    "commands": {
+        "01-Read Coils": {
+            "menu": "",
+            "callback": "read01",
+            "description": "读取线圈\nRead Coils",
+            "parameters": {
+                "DeviceAddr": {
+                    "type": "Integer",
+                    "default": 1,
+                    "min": 0,
+                    "max": 247,
+                    "description": "设备地址\n支持的数值范围 0 ~ 247, 默认值 1\nSlave Device Address\nSupport Range 0 ~ 247, Default 1\n"
+                },
+                "RegisterHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址高字节\nStarting Address High Byte\n"
+                },
+                "RegisterLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址低字节\nStarting Address Low Byte\n"
+                },
+                "QuantityHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量高字节\nQuantity High Byte\n"
+                },
+                "QuantityLow": {
+                    "type": "Integer",
+                    "default": 8,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量低字节\nQuantity Low Byte\n"
+                }
+            }
+        },
+        "02-Read Discrete Inputs": {
+            "menu": "",
+            "callback": "read02",
+            "description": "读取离散输入\nRead Discrete Inputs",
+            "parameters": {
+                "DeviceAddr": {
+                    "type": "Integer",
+                    "default": 1,
+                    "min": 0,
+                    "max": 247,
+                    "description": "设备地址\n支持的数值范围 0 ~ 247, 默认值 1\nSlave Device Address\nSupport Range 0 ~ 247, Default 1\n"
+                },
+                "RegisterHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址高字节\nStarting Address High Byte\n"
+                },
+                "RegisterLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址低字节\nStarting Address Low Byte\n"
+                },
+                "QuantityHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量高字节\nQuantity High Byte\n"
+                },
+                "QuantityLow": {
+                    "type": "Integer",
+                    "default": 8,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量低字节\nQuantity Low Byte\n"
+                }
+            }
+        },
+        "03-Read Holding Registers": {
+            "menu": "",
+            "callback": "read03",
+            "description": "读取保持寄存器\nRead Holding Registers",
+            "parameters": {
+                "DeviceAddr": {
+                    "type": "Integer",
+                    "default": 1,
+                    "min": 0,
+                    "max": 247,
+                    "description": "设备地址\n支持的数值范围 0 ~ 247, 默认值 1\nSlave Device Address\nSupport Range 0 ~ 247, Default 1\n"
+                },
+                "RegisterHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址高字节\nStarting Address High Byte\n"
+                },
+                "RegisterLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址低字节\nStarting Address Low Byte\n"
+                },
+                "QuantityHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量高字节\nQuantity High Byte\n"
+                },
+                "QuantityLow": {
+                    "type": "Integer",
+                    "default": 8,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量低字节\nQuantity Low Byte\n"
+                }
+            }
+        },
+        "04-Read Input Registers": {
+            "menu": "",
+            "callback": "read04",
+            "description": "读取输入寄存器\nRead Input Registers",
+            "parameters": {
+                "DeviceAddr": {
+                    "type": "Integer",
+                    "default": 1,
+                    "min": 0,
+                    "max": 247,
+                    "description": "设备地址\n支持的数值范围 0 ~ 247, 默认值 1\nSlave Device Address\nSupport Range 0 ~ 247, Default 1\n"
+                },
+                "RegisterHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址高字节\nStarting Address High Byte\n"
+                },
+                "RegisterLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址低字节\nStarting Address Low Byte\n"
+                },
+                "QuantityHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量高字节\nQuantity High Byte\n"
+                },
+                "QuantityLow": {
+                    "type": "Integer",
+                    "default": 8,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量低字节\nQuantity Low Byte\n"
+                }
+            }
+        },
+        "05-Write Single Coil": {
+            "menu": "",
+            "callback": "write05",
+            "description": "写入单个线圈\nWrite Single Coil",
+            "parameters": {
+                "DeviceAddr": {
+                    "type": "Integer",
+                    "default": 1,
+                    "min": 0,
+                    "max": 247,
+                    "description": "设备地址\n支持的数值范围 0 ~ 247, 默认值 1\nSlave Device Address\nSupport Range 0 ~ 247, Default 1\n"
+                },
+                "RegisterHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "线圈地址高字节\nCoil Address High Byte\n"
+                },
+                "RegisterLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "线圈地址低字节\nCoil Address Low Byte\n"
+                },
+                "Status": {
+                    "type": "Boolean",
+                    "default": false,
+                    "description": "线圈状态\ntrue=ON (0xFF00), false=OFF (0x0000)\nCoil Status\ntrue=ON (0xFF00), false=OFF (0x0000)\n"
+                }
+            }
+        },
+        "06-Write Single Register": {
+            "menu": "",
+            "callback": "write06",
+            "description": "写入单个保持寄存器\nWrite Single Register",
+            "parameters": {
+                "DeviceAddr": {
+                    "type": "Integer",
+                    "default": 1,
+                    "min": 0,
+                    "max": 247,
+                    "description": "设备地址\n支持的数值范围 0 ~ 247, 默认值 1\nSlave Device Address\nSupport Range 0 ~ 247, Default 1\n"
+                },
+                "RegisterHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "寄存器地址高字节\nRegister Address High Byte\n"
+                },
+                "RegisterLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "寄存器地址低字节\nRegister Address Low Byte\n"
+                },
+                "ValueHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "值高字节\nValue High Byte\n"
+                },
+                "ValueLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "值低字节\nValue Low Byte\n"
+                }
+            }
+        },
+        "0F-Write Multiple Coils": {
+            "menu": "",
+            "callback": "write0F",
+            "description": "写入多个线圈\nWrite Multiple Coils",
+            "parameters": {
+                "DeviceAddr": {
+                    "type": "Integer",
+                    "default": 1,
+                    "min": 0,
+                    "max": 247,
+                    "description": "设备地址\n支持的数值范围 0 ~ 247, 默认值 1\nSlave Device Address\nSupport Range 0 ~ 247, Default 1\n"
+                },
+                "RegisterHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址高字节\nStarting Address High Byte\n"
+                },
+                "RegisterLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址低字节\nStarting Address Low Byte\n"
+                },
+                "QuantityHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量高字节\nQuantity High Byte\n"
+                },
+                "QuantityLow": {
+                    "type": "Integer",
+                    "default": 8,
+                    "min": 1,
+                    "max": 255,
+                    "description": "数量低字节（最多16路）\nQuantity Low Byte (max 16)\n"
+                },
+                "Coil0": {
+                    "type": "Boolean",
+                    "default": false,
+                    "description": "第1路线圈\nCoil 0\n"
+                },
+                "Coil1": {
+                    "type": "Boolean",
+                    "default": false,
+                    "description": "第2路线圈\nCoil 1\n"
+                },
+                "Coil2": {
+                    "type": "Boolean",
+                    "default": false,
+                    "description": "第3路线圈\nCoil 2\n"
+                },
+                "Coil3": {
+                    "type": "Boolean",
+                    "default": false,
+                    "description": "第4路线圈\nCoil 3\n"
+                },
+                "Coil4": {
+                    "type": "Boolean",
+                    "default": false,
+                    "description": "第5路线圈\nCoil 4\n"
+                },
+                "Coil5": {
+                    "type": "Boolean",
+                    "default": false,
+                    "description": "第6路线圈\nCoil 5\n"
+                },
+                "Coil6": {
+                    "type": "Boolean",
+                    "default": false,
+                    "description": "第7路线圈\nCoil 6\n"
+                },
+                "Coil7": {
+                    "type": "Boolean",
+                    "default": false,
+                    "description": "第8路线圈\nCoil 7\n"
+                }
+            }
+        },
+        "10-Write Multiple Registers": {
+            "menu": "",
+            "callback": "write10",
+            "description": "写入多个保持寄存器\nWrite Multiple Registers",
+            "parameters": {
+                "DeviceAddr": {
+                    "type": "Integer",
+                    "default": 1,
+                    "min": 0,
+                    "max": 247,
+                    "description": "设备地址\n支持的数值范围 0 ~ 247, 默认值 1\nSlave Device Address\nSupport Range 0 ~ 247, Default 1\n"
+                },
+                "RegisterHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址高字节\nStarting Address High Byte\n"
+                },
+                "RegisterLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "起始地址低字节\nStarting Address Low Byte\n"
+                },
+                "QuantityHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "数量高字节\nQuantity High Byte\n"
+                },
+                "QuantityLow": {
+                    "type": "Integer",
+                    "default": 1,
+                    "min": 1,
+                    "max": 255,
+                    "description": "数量低字节\nQuantity Low Byte\n"
+                },
+                "DataHigh": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "写入值高字节（所有寄存器写入相同值）\nValue High Byte (same value for all registers)\n"
+                },
+                "DataLow": {
+                    "type": "Integer",
+                    "default": 0,
+                    "min": 0,
+                    "max": 255,
+                    "description": "写入值低字节\nValue Low Byte\n"
+                }
+            }
+        },
+        "Send Raw": {
+            "menu": "",
+            "callback": "sendRaw",
+            "description": "发送原始十六进制数据（自动计算CRC）\nSend raw hex data (CRC auto-added)",
+            "parameters": {
+                "HexString": {
+                    "type": "String",
+                    "default": "",
+                    "description": "十六进制字节串，空格分隔，例如：01 06 00 00 00 01\nHex bytes separated by space, e.g.: 01 06 00 00 00 01\n"
+                }
+            }
+        }
+    }
+}
