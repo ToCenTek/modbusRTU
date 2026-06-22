@@ -16,13 +16,14 @@
     },
     "scripts": ["modbusRTU.js"],
     "commands": {
-        "01-Read Coils": {
+        "01: Read Coils": {
             "menu": "",
-            "callback": "read01",
+            "callback": "readCoils",
             "description": "读取线圈\nRead Coils",
             "parameters": {
                 "DeviceAddr": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 1,
                     "min": 0,
                     "max": 247,
@@ -30,6 +31,7 @@
                 },
                 "RegisterHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -37,6 +39,7 @@
                 },
                 "RegisterLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -44,6 +47,7 @@
                 },
                 "QuantityHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -51,6 +55,7 @@
                 },
                 "QuantityLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 8,
                     "min": 0,
                     "max": 255,
@@ -58,13 +63,14 @@
                 }
             }
         },
-        "02-Read Discrete Inputs": {
+        "02: Read Discrete Inputs": {
             "menu": "",
-            "callback": "read02",
+            "callback": "readDiscreteInputs",
             "description": "读取离散输入\nRead Discrete Inputs",
             "parameters": {
                 "DeviceAddr": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 1,
                     "min": 0,
                     "max": 247,
@@ -72,6 +78,7 @@
                 },
                 "RegisterHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -79,6 +86,7 @@
                 },
                 "RegisterLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -86,6 +94,7 @@
                 },
                 "QuantityHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -93,20 +102,22 @@
                 },
                 "QuantityLow": {
                     "type": "Integer",
-                    "default": 8,
+                    "hexMode": true,
+                    "default": 1,
                     "min": 0,
                     "max": 255,
                     "description": "数量低字节\nQuantity Low Byte\n"
                 }
             }
         },
-        "03-Read Holding Registers": {
+        "03: Read Holding Registers": {
             "menu": "",
-            "callback": "read03",
+            "callback": "readHoldingRegisters",
             "description": "读取保持寄存器\nRead Holding Registers",
             "parameters": {
                 "DeviceAddr": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 1,
                     "min": 0,
                     "max": 247,
@@ -114,6 +125,7 @@
                 },
                 "RegisterHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -121,6 +133,7 @@
                 },
                 "RegisterLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -128,6 +141,7 @@
                 },
                 "QuantityHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -135,6 +149,7 @@
                 },
                 "QuantityLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 8,
                     "min": 0,
                     "max": 255,
@@ -142,13 +157,14 @@
                 }
             }
         },
-        "04-Read Input Registers": {
+        "04: Read Input Registers": {
             "menu": "",
-            "callback": "read04",
+            "callback": "readInputRegisters",
             "description": "读取输入寄存器\nRead Input Registers",
             "parameters": {
                 "DeviceAddr": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 1,
                     "min": 0,
                     "max": 247,
@@ -156,6 +172,7 @@
                 },
                 "RegisterHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -163,6 +180,7 @@
                 },
                 "RegisterLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -170,6 +188,7 @@
                 },
                 "QuantityHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -177,6 +196,7 @@
                 },
                 "QuantityLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 8,
                     "min": 0,
                     "max": 255,
@@ -184,13 +204,14 @@
                 }
             }
         },
-        "05-Write Single Coil": {
+        "05: Write Single Coil": {
             "menu": "",
-            "callback": "write05",
+            "callback": "writeSingleCoil",
             "description": "写入单个线圈\nWrite Single Coil",
             "parameters": {
                 "DeviceAddr": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 1,
                     "min": 0,
                     "max": 247,
@@ -198,6 +219,7 @@
                 },
                 "RegisterHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -205,6 +227,7 @@
                 },
                 "RegisterLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -217,13 +240,14 @@
                 }
             }
         },
-        "06-Write Single Register": {
+        "06: Write Single Register": {
             "menu": "",
-            "callback": "write06",
+            "callback": "writeSingleRegister",
             "description": "写入单个保持寄存器\nWrite Single Register",
             "parameters": {
                 "DeviceAddr": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 1,
                     "min": 0,
                     "max": 247,
@@ -231,6 +255,7 @@
                 },
                 "RegisterHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -238,6 +263,7 @@
                 },
                 "RegisterLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -245,6 +271,7 @@
                 },
                 "ValueHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -252,6 +279,7 @@
                 },
                 "ValueLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -259,13 +287,14 @@
                 }
             }
         },
-        "0F-Write Multiple Coils": {
+        "0F: Write Multiple Coils": {
             "menu": "",
-            "callback": "write0F",
+            "callback": "writeMultipleCoils",
             "description": "写入多个线圈\nWrite Multiple Coils",
             "parameters": {
                 "DeviceAddr": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 1,
                     "min": 0,
                     "max": 247,
@@ -273,6 +302,7 @@
                 },
                 "RegisterHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -280,6 +310,7 @@
                 },
                 "RegisterLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -287,6 +318,7 @@
                 },
                 "QuantityHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -294,10 +326,11 @@
                 },
                 "QuantityLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 8,
                     "min": 1,
                     "max": 255,
-                    "description": "数量低字节（最多16路）\nQuantity Low Byte (max 16)\n"
+                    "description": "数量低字节(最多8路)\nQuantity Low Byte (max 8)\n"
                 },
                 "Coil0": {
                     "type": "Boolean",
@@ -341,13 +374,14 @@
                 }
             }
         },
-        "10-Write Multiple Registers": {
+        "10: Write Multiple Registers": {
             "menu": "",
-            "callback": "write10",
+            "callback": "writeMultipleRegisters",
             "description": "写入多个保持寄存器\nWrite Multiple Registers",
             "parameters": {
                 "DeviceAddr": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 1,
                     "min": 0,
                     "max": 247,
@@ -355,6 +389,7 @@
                 },
                 "RegisterHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -362,6 +397,7 @@
                 },
                 "RegisterLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -369,6 +405,7 @@
                 },
                 "QuantityHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -376,6 +413,7 @@
                 },
                 "QuantityLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 8,
                     "min": 1,
                     "max": 255,
@@ -383,13 +421,15 @@
                 },
                 "DataHigh": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
-                    "description": "写入值高字节（所有寄存器写入相同值）\nValue High Byte (same value for all registers)\n"
+                    "description": "写入值高字节(所有寄存器写入相同值)\nValue High Byte (same value for all registers)\n"
                 },
                 "DataLow": {
                     "type": "Integer",
+                    "hexMode": true,
                     "default": 0,
                     "min": 0,
                     "max": 255,
@@ -400,12 +440,12 @@
         "Send Raw": {
             "menu": "",
             "callback": "sendRaw",
-            "description": "发送原始十六进制数据（自动计算CRC）\nSend raw hex data (CRC auto-added)",
+            "description": "发送原始十六进制数据(自动计算CRC)\nSend raw hex data (CRC auto-added)",
             "parameters": {
                 "HexString": {
                     "type": "String",
                     "default": "",
-                    "description": "十六进制字节串，空格分隔，例如：01 06 00 00 00 01\nHex bytes separated by space, e.g.: 01 06 00 00 00 01\n"
+                    "description": "十六进制字节串, 空格分隔, 例如: 01 06 00 00 00 01\nHex bytes separated by space, e.g.: 01 06 00 00 00 01\n"
                 }
             }
         }

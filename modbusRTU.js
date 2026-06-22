@@ -1,6 +1,6 @@
 var crcTable = null;
 
-// 按位XOR（JUCE JS不支持 ^ 运算符，用减法循环实现）
+// CRC16 按位异或（JUCE JS 无 ^ 运算符）
 function xorBits(a, b, bits) {
     var result = 0;
     var bitVal = 1;
@@ -15,7 +15,7 @@ function xorBits(a, b, bits) {
     return result;
 }
 
-// 预计算CRC16查找表（多项式 0x8005 反射 = 0xA001）
+// 预计算 CRC16 查表（多项式 0x8005 反射 = 0xA001）
 function initCRCTable() {
     crcTable = [];
     for (var i = 0; i < 256; i++) {
@@ -32,7 +32,7 @@ function initCRCTable() {
     }
 }
 
-// CRC16 Modbus RTU，返回 [低字节, 高字节]
+// CRC16 Modbus，返回 [低字节, 高字节]
 function crc16(data) {
     if (crcTable == null) initCRCTable();
     var crc = 0xFFFF;
@@ -60,46 +60,66 @@ function hexToInt(hex) {
     return val;
 }
 
-// 发送帧：加CRC后发送
+// 整数 → 两位十六进制字符串
+function toHex(val) {
+    var d = "0123456789ABCDEF";
+    return d.charAt(Math.floor(val / 16)) + d.charAt(val % 16);
+}
+
+// 字节数组 → 空格分隔的十六进制字符串
+function bytesToStr(bytes) {
+    var s = "";
+    for (var i = 0; i < bytes.length; i++) {
+        if (i > 0) s = s + " ";
+        s = s + toHex(bytes[i]);
+    }
+    return s;
+}
+
+// 加 CRC 并发送，输出 TX 日志
 function sendFrame(pdu) {
-    var crc = crc16(pdu);
-    pdu.push(crc[0], crc[1]);
+    var c = crc16(pdu);
+    pdu.push(c[0], c[1]);
+    script.log("-TX: " + bytesToStr(pdu));
     local.sendBytes(pdu);
 }
 
+// 模块初始化
 function init() {
-    script.log("ModbusRTU module loaded");
+    script.log("Modbus RTU Master loaded");
 }
 
-// 收到串口数据时回调
+// 收到串口数据时回调，输出 RX 日志
 function dataReceived(data) {
-    for (var i = 0; i < data.length; i++) {
-        script.log("RX: ", data[i]);
+    if (data.length > 0) {
+        script.log("-RX: " + bytesToStr(data));
     }
 }
 
-// 01 Read Coils：读取线圈
-function read01(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow) {
+// ==== Modbus 功能码命令 ====
+
+// 01: 读取线圈
+function readCoils(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow) {
     sendFrame([DeviceAddr, 0x01, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow]);
 }
 
-// 02 Read Discrete Inputs：读取离散输入
-function read02(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow) {
+// 02: 读取离散输入
+function readDiscreteInputs(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow) {
     sendFrame([DeviceAddr, 0x02, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow]);
 }
 
-// 03 Read Holding Registers：读取保持寄存器
-function read03(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow) {
+// 03: 读取保持寄存器
+function readHoldingRegisters(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow) {
     sendFrame([DeviceAddr, 0x03, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow]);
 }
 
-// 04 Read Input Registers：读取输入寄存器
-function read04(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow) {
+// 04: 读取输入寄存器
+function readInputRegisters(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow) {
     sendFrame([DeviceAddr, 0x04, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow]);
 }
 
-// 05 Write Single Coil：写入单个线圈
-function write05(DeviceAddr, RegisterHigh, RegisterLow, Status) {
+// 05: 写入单个线圈
+function writeSingleCoil(DeviceAddr, RegisterHigh, RegisterLow, Status) {
     if (Status) {
         sendFrame([DeviceAddr, 0x05, RegisterHigh, RegisterLow, 0xFF, 0x00]);
     } else {
@@ -107,16 +127,15 @@ function write05(DeviceAddr, RegisterHigh, RegisterLow, Status) {
     }
 }
 
-// 06 Write Single Register：写入单个保持寄存器
-function write06(DeviceAddr, RegisterHigh, RegisterLow, ValueHigh, ValueLow) {
+// 06: 写入单个保持寄存器
+function writeSingleRegister(DeviceAddr, RegisterHigh, RegisterLow, ValueHigh, ValueLow) {
     sendFrame([DeviceAddr, 0x06, RegisterHigh, RegisterLow, ValueHigh, ValueLow]);
 }
 
-// 0F Write Multiple Coils：写入多个线圈
-function write0F(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow, Coil0, Coil1, Coil2, Coil3, Coil4, Coil5, Coil6, Coil7) {
+// 0F: 写入多个线圈（最多 8 路）
+function writeMultipleCoils(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow, Coil0, Coil1, Coil2, Coil3, Coil4, Coil5, Coil6, Coil7) {
     var pdu = [DeviceAddr, 0x0F, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow];
     var qty = QuantityHigh * 256 + QuantityLow;
-    var coils = [Coil0, Coil1, Coil2, Coil3, Coil4, Coil5, Coil6, Coil7];
     var byteCount = Math.floor((qty + 7) / 8);
     pdu.push(byteCount);
     for (var i = 0; i < byteCount; i++) {
@@ -125,8 +144,7 @@ function write0F(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLo
         var maxBit = 8;
         if (i * 8 + 8 > qty) maxBit = qty - i * 8;
         for (var j = 0; j < maxBit; j++) {
-            var coilIndex = i * 8 + j;
-            if (coils[coilIndex]) byteVal = byteVal + bitPos;
+            if ([Coil0, Coil1, Coil2, Coil3, Coil4, Coil5, Coil6, Coil7][i * 8 + j]) byteVal = byteVal + bitPos;
             bitPos = bitPos * 2;
         }
         pdu.push(byteVal);
@@ -134,36 +152,32 @@ function write0F(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLo
     sendFrame(pdu);
 }
 
-// 10 Write Multiple Registers：写入多个保持寄存器（所有寄存器写入相同值）
-function write10(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow, DataHigh, DataLow) {
+// 10: 写入多个保持寄存器（所有寄存器写入相同值）
+function writeMultipleRegisters(DeviceAddr, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow, DataHigh, DataLow) {
     var pdu = [DeviceAddr, 0x10, RegisterHigh, RegisterLow, QuantityHigh, QuantityLow];
     var qty = QuantityHigh * 256 + QuantityLow;
-    var byteCount = qty * 2;
-    pdu.push(byteCount);
+    pdu.push(qty * 2);
     for (var i = 0; i < qty; i++) {
         pdu.push(DataHigh, DataLow);
     }
     sendFrame(pdu);
 }
 
-// Send Raw：手动输入十六进制，自动加CRC发送
+// ==== 通用 ====
+
+// 发送原始十六进制（自动加 CRC）
 function sendRaw(HexString) {
-    var hexStr = HexString;
-    if (hexStr == "") return;
+    if (HexString == "") return;
     var bytes = [];
-    var current = "";
-    for (var i = 0; i < hexStr.length; i++) {
-        var c = hexStr.charAt(i);
+    var cur = "";
+    for (var i = 0; i < HexString.length; i++) {
+        var c = HexString.charAt(i);
         if (c == " ") {
-            if (current != "") {
-                bytes.push(hexToInt(current));
-                current = "";
-            }
+            if (cur != "") { bytes.push(hexToInt(cur)); cur = ""; }
         } else {
-            current = current + c;
+            cur = cur + c;
         }
     }
-    if (current != "") bytes.push(hexToInt(current));
-    if (bytes.length == 0) return;
-    sendFrame(bytes);
+    if (cur != "") bytes.push(hexToInt(cur));
+    if (bytes.length > 0) sendFrame(bytes);
 }
